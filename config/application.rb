@@ -1,6 +1,6 @@
-require_relative "boot"
+require_relative 'boot'
 
-require "rails/all"
+require 'rails/all'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -9,7 +9,7 @@ Bundler.require(*Rails.groups)
 module AgenticQuizApp
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 8.1
+    config.load_defaults(8.1)
 
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
@@ -28,5 +28,13 @@ module AgenticQuizApp
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+
+    # Sidekiq
+    config.active_job.queue_adapter = :sidekiq
+
+    # Session
+    config.session_store(:cookie_store, key: '_your_app_session')
+    config.middleware.use(ActionDispatch::Cookies)
+    config.middleware.use(config.session_store, config.session_options)
   end
 end
