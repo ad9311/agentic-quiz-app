@@ -56,4 +56,21 @@ class QuizzesControllerTest < ActionDispatch::IntegrationTest
     assert options.any?
     assert(options.all? { |option| option.keys.sort == %w[id text] })
   end
+
+  test 'create returns validation errors with unprocessable entity status' do
+    payload = {
+      quiz: {
+        title: '',
+        description: 'Missing title should fail',
+        questions: []
+      }
+    }
+
+    assert_no_difference('Quiz.count') do
+      post quizzes_url, params: payload
+    end
+
+    assert_response :unprocessable_entity
+    assert_equal({ 'errors' => ["Title can't be blank"] }, response.parsed_body)
+  end
 end

@@ -18,7 +18,7 @@ class QuizzesController < ApplicationController
     if result.success?
       render(json: result.data, status: :created)
     else
-      render(json: { errors: result.errors }, status: :unprocessable_content)
+      render(json: { errors: result.errors }, status: :unprocessable_entity)
     end
   end
 
