@@ -20,6 +20,7 @@
 - Classes/modules are `CamelCase`; files and methods are `snake_case`.
 - Tests live in `test/` with names like `user_test.rb` and `users_controller_test.rb`.
 - Run `bin/rubocop` before shipping changes.
+- Always create models by running `bin/rails generate model [model_name]`.
 - Business logic lives in `app/services/` as centralized service objects.
 - Service objects must always return a result object or value (no nil-only flows).
 - Controllers stay thin: parameter handling and rendering only.
@@ -27,6 +28,7 @@
 
 ## Testing Guidelines
 - Framework: Minitest (`rails/test_help`).
+- After creating a test file, run it to confirm it passes.
 - Run all tests with `bin/rails test`.
 - Run a single test file: `bin/rails test test/models/user_test.rb`.
 - Seed verification is part of CI: `env RAILS_ENV=test bin/rails db:seed:replant`.
