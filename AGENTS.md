@@ -26,6 +26,7 @@ The AI Development Quiz App helps learners test and reinforce AI software develo
 - `bin/rails db:prepare` ensures the database is created and migrated.
 - `bin/ci` runs the full CI recipe (lint, security, tests, seed validation).
 - `bin/rubocop`, `bin/brakeman`, `bin/bundler-audit` run style and security checks.
+- Always try to run `rubocop -A` to keep formatting consistent, but ask for approval first.
 
 ## Coding Style & Naming Conventions
 - Ruby uses 2-space indentation; keep lines <= 120 chars (`.rubocop.yml`).

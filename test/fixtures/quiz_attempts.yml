@@ -1,0 +1,16 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  quiz: one
+  started_at: <%= Time.current %>
+  completed_at: <%= Time.current %>
+  score: 85
+  status: completed
+
+two:
+  user: two
+  quiz: two
+  started_at: <%= Time.current %>
+  score: 0
+  status: in_progress
