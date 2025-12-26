@@ -1,5 +1,17 @@
 # Repository Guidelines
 
+## App Overview
+The AI Development Quiz App helps learners test and reinforce AI software development concepts (agent design, prompt engineering, workflow automation) through rich text quiz content. It exposes a RESTful API to manage quizzes, track user attempts, and calculate scores while keeping business logic clear and extensible.
+
+## General Requirements
+- Build a RESTful API that serves rich text quiz content (not plain text).
+- Demonstrate clean REST design and implementation conventions.
+- Implement proper data modeling and persistence.
+- Support easy expansion with new quizzes or question sets.
+- Handle business logic for quiz scoring and progress tracking.
+- Implement asynchronous communication with external services.
+- Write clean, maintainable code with appropriate error handling.
+
 ## Project Structure & Module Organization
 - `app/` holds Rails application code (controllers, models, views, jobs, mailers).
 - `config/` contains environment, routes, and service configuration (`database.yml`, `cable.yml`, `queue.yml`).
@@ -22,7 +34,7 @@
 - Run `bin/rubocop` before shipping changes.
 - Always create models by running `bin/rails generate model [model_name]`.
 - Business logic lives in `app/services/` as centralized service objects.
-- Service objects must always return a result object or value (no nil-only flows).
+- Service objects must always be called with a `.call` method and return a Result struct (no nil-only flows).
 - Controllers stay thin: parameter handling and rendering only.
 - Models should always validate their state (no bypassed validations).
 
