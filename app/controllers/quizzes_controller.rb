@@ -29,14 +29,14 @@ class QuizzesController < ApplicationController
   end
 
   def quiz_params
-    params.expect(
-      quiz: [:title,
-             :description,
-             { questions: [
-               :body,
-               :explanation,
-               { options: %i[text correct] }
-             ] }]
+    params.require(:quiz).permit(
+      :title,
+      :description,
+      questions: [
+        :body,
+        :explanation,
+        { options: %i[text correct] }
+      ]
     )
   end
 end
