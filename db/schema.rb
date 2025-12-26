@@ -10,5 +10,88 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 0) do
+ActiveRecord::Schema[8.1].define(version: 2025_12_26_182046) do
+  create_table "answers", force: :cascade do |t|
+    t.boolean "correct", null: false
+    t.datetime "created_at", null: false
+    t.integer "option_id", null: false
+    t.integer "question_id", null: false
+    t.integer "quiz_attempt_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["option_id"], name: "index_answers_on_option_id"
+    t.index ["question_id"], name: "index_answers_on_question_id"
+    t.index ["quiz_attempt_id", "question_id"], name: "index_answers_on_quiz_attempt_id_and_question_id", unique: true
+    t.index ["quiz_attempt_id"], name: "index_answers_on_quiz_attempt_id"
+  end
+
+  create_table "notifications", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.text "error_message"
+    t.integer "quiz_attempt_id", null: false
+    t.datetime "sent_at"
+    t.string "status", null: false
+    t.datetime "updated_at", null: false
+    t.index ["quiz_attempt_id"], name: "index_notifications_on_quiz_attempt_id"
+    t.index ["status"], name: "index_notifications_on_status"
+  end
+
+  create_table "options", force: :cascade do |t|
+    t.boolean "correct", default: false, null: false
+    t.datetime "created_at", null: false
+    t.integer "question_id", null: false
+    t.text "text", null: false
+    t.datetime "updated_at", null: false
+    t.index ["question_id", "correct"], name: "index_options_on_question_id_and_correct"
+    t.index ["question_id"], name: "index_options_on_question_id"
+  end
+
+  create_table "questions", force: :cascade do |t|
+    t.text "body", null: false
+    t.datetime "created_at", null: false
+    t.text "explanation"
+    t.integer "quiz_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["quiz_id"], name: "index_questions_on_quiz_id"
+  end
+
+  create_table "quiz_attempts", force: :cascade do |t|
+    t.datetime "completed_at"
+    t.datetime "created_at", null: false
+    t.integer "quiz_id", null: false
+    t.integer "score"
+    t.datetime "started_at", null: false
+    t.string "status", null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
+    t.index ["quiz_id", "created_at"], name: "index_quiz_attempts_on_quiz_id_and_created_at"
+    t.index ["quiz_id"], name: "index_quiz_attempts_on_quiz_id"
+    t.index ["score"], name: "index_quiz_attempts_on_score"
+    t.index ["user_id", "created_at"], name: "index_quiz_attempts_on_user_id_and_created_at"
+    t.index ["user_id"], name: "index_quiz_attempts_on_user_id"
+  end
+
+  create_table "quizzes", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.text "description"
+    t.string "title", null: false
+    t.datetime "updated_at", null: false
+    t.index ["title"], name: "index_quizzes_on_title", unique: true
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "email", null: false
+    t.string "name", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_users_on_email", unique: true
+  end
+
+  add_foreign_key "answers", "options"
+  add_foreign_key "answers", "questions"
+  add_foreign_key "answers", "quiz_attempts", on_delete: :cascade
+  add_foreign_key "notifications", "quiz_attempts", on_delete: :cascade
+  add_foreign_key "options", "questions", on_delete: :cascade
+  add_foreign_key "questions", "quizzes", on_delete: :cascade
+  add_foreign_key "quiz_attempts", "quizzes"
+  add_foreign_key "quiz_attempts", "users"
 end

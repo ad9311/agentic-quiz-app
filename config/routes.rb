@@ -12,4 +12,9 @@ Rails.application.routes.draw do
 
   mount Sidekiq::Web => '/sidekiq'
   mount LetterOpenerWeb::Engine, at: '/letter_opener'
+
+  resources :quizzes, only: %i[index show create], defaults: { format: :json }
+  resources :quiz_attempts, only: [:create], defaults: { format: :json } do
+    post :submit, on: :member
+  end
 end

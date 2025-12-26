@@ -53,4 +53,7 @@ group :development, :test do
 
   # For opening emails in local env
   gem 'letter_opener_web'
+
+  # Keep Minitest compatible with Rails 8.1 defaults.
+  gem 'minitest', '~> 5.20'
 end
